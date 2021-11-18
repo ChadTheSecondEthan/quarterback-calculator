@@ -8,6 +8,9 @@ class Reader:
         self.size = self.spreadsheet.rowCount, self.spreadsheet.columnCount
 
         self.players = self.get_players()
+        self.players.sort(key=lambda player: player.calc_rating())
+        self.players.reverse()
+
         for player in self.players:
             print(player)
 
