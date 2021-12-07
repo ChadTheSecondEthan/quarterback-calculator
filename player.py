@@ -5,7 +5,7 @@ class Player:
         self.tds = get_data(row, 'l')
 
     def calc_rating(self):
-        return int(self.passing_yards)
+        return int(self.tds) * 100 + int(self.passing_yards)
 
     def __str__(self):
         return f'{self.name}: {self.tds} TD\'s, {self.passing_yards} Yds'
