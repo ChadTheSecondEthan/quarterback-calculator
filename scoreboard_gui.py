@@ -1,21 +1,24 @@
-import tkinter
+import matplotlib.pyplot as plt
 
-from label_group import LabelGroup
+colors = ['black', 'red', 'green', 'blue', 'cyan', 'purple', 'yellow', 'orange']
 
 class ScoreboardGUI: 
-    def __init__(self, players, preferences):
-        self.window = tkinter.Tk()
-        self.window.title("Players")
-        self.labels = []
+    def __init__(self, players, preferences, amount):
+        for player in players:
+            player.calc_rating(preferences)
+        players.sort(key=lambda player: player.rating)
+        players = players[-amount:]
+        players.reverse()
 
-        for i in range(10):
-            player = players[i]
-            self.labels.append(LabelGroup(self.window, [player.__str__()]))
+        letters = [chr(ord('A') + i) for i in range(amount)]
+        names = []
+        ratings = []
 
-        self.pack()
+        for player in players:
+            names.append(player.name.split(' ')[-1])
+            ratings.append(player.rating)
 
-        tkinter.mainloop()
-
-    def pack(self):
-        for label in self.labels:
-            label.pack()
+        bars = plt.bar(letters, ratings, color=colors)
+        plt.legend(bars, names)
+        plt.title("Player Ratings")
+        plt.show()

@@ -5,11 +5,7 @@ from input_area import InputArea
 ScoringOptions = [
     "Touchdowns",
     "Passing Yards",
-    "Interceptions",
-    "Fumbles",
-    "Passing Touchdowns",
-    "Rushing Yards",
-    "Rushing Touchdowns"
+    "Interceptions"
 ]
 
 class ScoringPreference:
@@ -21,14 +17,11 @@ class ScoringPreference:
 
         self.top_label = tkinter.Label(self.top, text="Select Preference Type:")
 
-        option = tkinter.StringVar()
-        option.set(ScoringOptions[0])
-        self.top_dropdown = tkinter.OptionMenu(self.top, option, *ScoringOptions)
+        self.option = tkinter.StringVar()
+        self.option.set(ScoringOptions[0])
+        self.top_dropdown = tkinter.OptionMenu(self.top, self.option, *ScoringOptions)
 
         self.destroy_button = tkinter.Button(self.frame, text="Remove Preference", command=lambda: on_destroy(self))
-
-    def on_dropdown_changed(self, *new_value):
-        pass
 
     def pack(self):
         self.top_label.pack(side='left')
@@ -42,7 +35,7 @@ class ScoringPreference:
         self.frame.pack()
 
     def get_weight(self):
-        pass
+        return self.weight_input.get()
 
     def get_type(self):
-        pass
+        return self.option.get()

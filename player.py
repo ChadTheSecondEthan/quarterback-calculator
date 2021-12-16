@@ -1,11 +1,17 @@
 class Player:
     def __init__(self, row, get_data):
+        self.data = {
+            "Passing Yards": int(get_data(row, 'k')),
+            "Touchdowns": int(get_data(row, 'l')),
+            "Interceptions" : int(get_data(row, 'n')),
+        }
         self.name = get_data(row, 'b').split('\\')[0]
-        self.passing_yards = get_data(row, 'k')
-        self.tds = get_data(row, 'l')
+        self.rating = 0
 
-    def calc_rating(self):
-        return int(self.tds) * 100 + int(self.passing_yards)
+    def calc_rating(self, preferences):
+        self.rating = 0
+        for p in preferences:
+            self.rating += self.data[p.get_type()] * float(p.get_weight())
 
-    def __str__(self):
-        return f'{self.name}: {self.tds} TD\'s, {self.passing_yards} Yds'
+    def __repr__(self):
+        return self.name
